@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+ 
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+  
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="container">
+    <div class="title">EXTRACTION DE FICHE DE PAIE </div>
+    <div class="content">
+      <form  #forminfo="ngForm" (ngSubmit)=onSubmit(forminfo.value)>
+        <div class="user-details">
+          
+          <div class="input-box">
+            <input type="radio" name="isRouleau" [value]="true"  [(ngModel)]="typeidd" id="dot-4">
+
+            <input type="radio" name="isRouleau" [value]="false"  [(ngModel)]="typeidd"   id="dot-5">
+     
+            <span class="details">Forme de fichier </span>
+            <div class="category" style="width: 97%;">
+              <label for="dot-4">
+                <span class="dot four"></span>
+                <span class="gender">Rouleau (pdf)   </span>
+              </label>
+              <label for="dot-5">
+
+                <span class="dot five"></span>
+                <span class="gender">Dossier(zip)</span>
+              </label>
+              
+            
+            </div>           
+            
+          </div>
+           
+
+
+          <div class="input-box">
+            <input type="radio" value ="CNSS" [(ngModel)]="typeid" name="typeIdent" id="dot-1">
+            <input type="radio"  value ="matricule"   [(ngModel)]="typeid" name="typeIdent" id="dot-2">
+     
+            <span class="details">Type d'Identifiant </span>
+            <div class="category" style="width: 85%;">
+              <label for="dot-1">
+              <span class="dot one"></span>
+              <span class="gender">CNSS</span>
+            </label>
+            <label for="dot-2">
+              <span class="dot two"></span>
+              <span class="gender">Matricule</span>
+            </label>            
+            </div>            
+          </div>    
+
+
+
+          <!--
+          <div class="input-box">
+            <span class="details">Valeur d'Identifiant</span>
+            <input type="text" placeholder="Entrer le valeur d'Identifiant" name="valeurIdent"  ngModel required>
+          </div>
+        
+          -->
+          
+          <div class="input-box" *ngIf="typeidd">
+            <input type="radio" value ="langeurChaine" [(ngModel)]="typeSearch" name=" typeSearch" id="dot-6">
+            <input type="radio"  value ="chaineApres"   [(ngModel)]="typeSearch" name="typeSearch" id="dot-7">
+     
+            <span class="details">Type de Recherche</span>
+            <div class="category">
+              <label for="dot-7">
+                <span class="dot seven"></span>
+                <span class="gender"> <small>chaine apres</small> </span>
+              </label> 
+              <label for="dot-6">
+              <span class="dot six"></span>
+              <span class="gender"><small>langeur de {{typeid}}</small>  </span>
+            </label>
+                       
+            </div>            
+          </div>
+        
+
+         
+
+
+
+
+
+
+          <ng-container *ngIf="typeSearch==='chaineApres'; then first else second "></ng-container>
+          <ng-template #second  >
+            <div class="input-box" *ngIf="typeidd" >
+              <span class="details">largeur de  {{typeid}} </span>
+              <input type="text" placeholder="Entrer largeur de  {{data.typeIdent}}" name="largeur" ngModel >
+            </div>
+        </ng-template>
+
+        <ng-template #first >
+          <div class="input-box" *ngIf="typeidd" >
+            <span class="details">Chaine apres {{typeid}} </span>
+            <input type="text" placeholder="Entrer la chaine" name="chaineApres" ngModel >
+          </div>
+        </ng-template>
+
+        <div class="input-box" *ngIf="typeidd" >            
+          <span class="details">Ligne</span>
+          <input type="text" placeholder="Entrer la position en ligne" name="ligne" ngModel required>
+        </div>
+
+        <div class="input-box" *ngIf="typeidd" >            
+          <span class="details">Colonne</span>
+          <input type="text" placeholder="Entrer la position en colonne" name="colonne" ngModel required>
+        </div>
+        <div class="input-box" >
+          <span class="details"> Date de fiche de paie</span>
+          <input type="month" placeholder="mm-yyyy" max="{{currentDate | date:'MM-yyyy'}}" name="date" ngModel  required >
+        </div>
+
+
+        <!--  <div class="input-box">
+            <span class="details">Destination</span>
+            <input type="text" placeholder="Entrer la distination" name="destination" ngModel required>
+          </div>
+         -->
+    
+          
+          </div>
+          <div class="input-box" >
+ 
+            <span class="details">Telechargé le fichier</span>        
+              <label class="btn btn-default p-0">
+                <input type="file" (change)="selectFile($event)" name="lienFichier" ngModel required />
+             
+              </label>
+      
+           
+              <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+                Upload
+              </button>
+     
+    
+          
+          <div *ngIf="currentFile" class="progress my-3">
+            <div
+              class="progress-bar progress-bar-info progress-bar-striped"
+              role="progressbar"
+              attr.aria-valuenow="{{ progress }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: progress + '%' }"
+            >
+              {{ progress }}%
+            </div>
+          </div>
+          
+          <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+ 
+          </div>
+
+        <div class="button" >
+          <input type="submit" [disabled]="!forminfo.form.valid" value="Confirmer">
+        </div>
+      </form>
+    </div>
+  </div>
+  
+ 
+ 
+</body>
+
+
+</html>
